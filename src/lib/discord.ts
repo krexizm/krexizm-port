@@ -30,6 +30,16 @@ export async function resolveActivityImage(
     }
   }
 
+  if (image.startsWith('mp:app-assets/')) {
+    const parts = image.slice('mp:app-assets/'.length).split('/');
+    if (parts.length !== 2) return null;
+    const [appId, asset] = parts;
+    const safeAppId = sanitizeAppId(appId);
+    const safeAsset = sanitizeAssetKey(asset.replace(/\.(png|jpg|jpeg|webp)$/i, ''));
+    if (!safeAppId || !safeAsset) return null;
+    return `https://cdn.discordapp.com/app-assets/${safeAppId}/${safeAsset}.png`;
+  }
+
   if (image.startsWith('mp:external/')) {
     return image.replace('mp:external/', 'https://media.discordapp.net/external/');
   }
