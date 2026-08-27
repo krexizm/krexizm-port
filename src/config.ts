@@ -9,7 +9,7 @@ export const config = {
 
   // IDs
   discord: {
-    id: '699386102066446346' as const,
+    id: '1465461016761598075' as const,
   },
   github: {
     username: 'Krex381' as const,
@@ -25,7 +25,7 @@ export const config = {
     },
     {
       name: 'Discord' as const,
-      url: 'https://discord.com/users/699386102066446346' as const,
+      url: 'https://discord.com/users/1465461016761598075' as const,
       handle: 'krexizm.' as const,
       description: 'Community and chat' as const,
     },
