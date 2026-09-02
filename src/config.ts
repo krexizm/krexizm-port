@@ -1,3 +1,6 @@
+// Single source of truth — change once, updates everywhere (socials + api endpoints)
+const DISCORD_ID = '699386102066446346' as const;
+
 export const config = {
   // My Infos
   displayName: 'Krex' as const,
@@ -9,7 +12,7 @@ export const config = {
 
   // IDs
   discord: {
-    id: '1465461016761598075' as const,
+    id: DISCORD_ID,
   },
   github: {
     username: 'Krex381' as const,
@@ -25,7 +28,7 @@ export const config = {
     },
     {
       name: 'Discord' as const,
-      url: 'https://discord.com/users/1465461016761598075' as const,
+      url: `https://discord.com/users/${DISCORD_ID}` as const,
       handle: 'krexizm.' as const,
       description: 'Community and chat' as const,
     },
@@ -70,7 +73,7 @@ export const api = {
     if (!SAFE_DISCORD_ID.test(userId) || !SAFE_AVATAR_HASH.test(avatarId)) return '';
     return `https://cdn.discordapp.com/avatars/${userId}/${avatarId}.png?size=128`;
   },
-  discordProfile: `https://dcdn.dstn.to/profile/${config.discord.id}`,
+  discordProfile: `https://dcdn.dstn.to/profile/${DISCORD_ID}`,
   githubUser: `https://api.github.com/users/${config.github.username}`,
   githubRepos: `https://api.github.com/users/${config.github.username}/repos?per_page=100&sort=updated`,
 } as const;
