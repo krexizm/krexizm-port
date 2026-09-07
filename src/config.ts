@@ -1,4 +1,3 @@
-// Single source of truth — change once, updates everywhere (socials + api endpoints)
 const DISCORD_ID = '699386102066446346' as const;
 
 export const config = {
@@ -22,7 +21,7 @@ export const config = {
   socials: [
     {
       name: 'GitHub' as const,
-      url: 'https://github.com/Krex381' as const,
+      url: 'https://github.com/krexizm' as const,
       handle: '@Krex381' as const,
       description: 'Open source projects and code' as const,
     },
