@@ -39,7 +39,7 @@ export default function Footer() {
         &copy; {new Date().getFullYear()} {config.displayName}
       </span>
       <a
-        href={`https://github.com/${config.github.username}`}
+        href="https://github.com/krexizm/krexizm-port"
         target="_blank"
         rel="noopener noreferrer"
         className="flex items-center gap-1.5 text-secondary hover:text-foreground transition-colors"

@@ -14,7 +14,7 @@ export const config = {
     id: DISCORD_ID,
   },
   github: {
-    username: 'Krex381' as const,
+    username: 'krexizm' as const,
   },
 
   // Social links
@@ -22,7 +22,7 @@ export const config = {
     {
       name: 'GitHub' as const,
       url: 'https://github.com/krexizm' as const,
-      handle: '@Krex381' as const,
+      handle: '@krexizm' as const,
       description: 'Open source projects and code' as const,
     },
     {
@@ -46,7 +46,7 @@ export const config = {
   ],
 
   // Repos to exclude from Work page (e.g. portfolio repo)
-  excludeRepos: ['Krex381'] as string[],
+  excludeRepos: ['krexizm'] as string[],
 
   // Skills
   skills: [

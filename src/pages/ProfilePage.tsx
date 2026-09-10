@@ -11,7 +11,7 @@ import SplitText from '@/components/SplitText';
 import BlurText from '@/components/BlurText';
 import CountUp from '@/components/CountUp';
 import { Badge } from '@/components/ui/badge';
-import { Globe, Clock, Calendar, Shield, Terminal, Server, Network, Database, Code2, Music, Monitor, Smartphone, Gamepad2, Heart } from 'lucide-react';
+import { Globe, Clock, Calendar, Shield, Terminal, Server, Network, Database, Code2, Monitor, Smartphone, Gamepad2, Heart } from 'lucide-react';
 
 interface DiscordUser {
   id: string;
@@ -172,6 +172,7 @@ function ActivityItem({ activity }: { activity: LanyardData['activities'][number
 
   const icon = activity.type === 0 ? '🎮' : activity.type === 1 ? '📡' : activity.type === 2 ? '🎵' : activity.type === 3 ? '👁️' : '';
   const isSpotify = activity.type === 2;
+  const isVSCode = activity.name === 'Code';
 
   return (
     <div className="flex items-start gap-3 p-2 rounded-lg bg-white/[0.02]">
@@ -183,7 +184,7 @@ function ActivityItem({ activity }: { activity: LanyardData['activities'][number
             width={48}
             height={48}
             loading="lazy"
-            className="w-12 h-12 rounded-lg object-cover"
+            className="w-12 h-12 rounded-lg object-cover transition-transform duration-300 ease-out hover:scale-110"
             onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
           />
           {smallImage && (
@@ -205,7 +206,6 @@ function ActivityItem({ activity }: { activity: LanyardData['activities'][number
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
           <span className="text-foreground font-medium text-sm truncate">{activity.name}</span>
-          {isSpotify && <Music size={12} className="text-[#1db954] shrink-0" />}
         </div>
         {activity.details && (
           <p className="text-xs text-secondary truncate">{activity.details}</p>
@@ -219,6 +219,18 @@ function ActivityItem({ activity }: { activity: LanyardData['activities'][number
           </p>
         )}
       </div>
+      {(isSpotify || isVSCode) && (
+        <div className="flex shrink-0 self-center items-center justify-center mr-2">
+          <img
+            src={isSpotify ? "https://thesvg.org/icons/spotify/default.svg" : "https://thesvg.org/icons/visual-studio-code/default.svg"}
+            alt={isSpotify ? "Spotify" : "Visual Studio Code"}
+            width={24}
+            height={24}
+            loading="lazy"
+            className="w-6 h-6"
+          />
+        </div>
+      )}
     </div>
   );
 }
@@ -247,7 +259,7 @@ function DiscordBlock({ profile }: { profile: DiscordProfile | null }) {
               alt="Discord avatar"
               width={56}
               height={56}
-              className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-3 sm:border-4 border-[#0a0a0a]"
+              className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-3 sm:border-4 border-[#0a0a0a] transition-transform duration-300 ease-out hover:scale-105"
               onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
             />
           ) : (

@@ -24,6 +24,19 @@ const education = [
   },
 ];
 
+function duration(start: string, end: string) {
+  const endYear = end === 'Present' ? new Date().getFullYear() : parseInt(end, 10);
+  const yrs = endYear - parseInt(start, 10) + 1;
+  return `${yrs} yr${yrs === 1 ? '' : 's'}`;
+}
+
+function tagsOf(field: string) {
+  return field
+    .split(/[,&]/)
+    .map((s) => s.trim().replace(/^self-improvement in /i, ''))
+    .filter(Boolean);
+}
+
 export default function EducationPage() {
   return (
     <div className="page-content">
@@ -36,28 +49,57 @@ export default function EducationPage() {
 
           <div className="relative">
             {/* connecting line */}
-            <div className="absolute left-[5px] top-3 bottom-3 w-px bg-white/10" />
+            <div className="absolute left-[5px] top-4 bottom-4 w-px bg-white/10" />
 
-            <div className="space-y-4 sm:space-y-5">
-              {education.map((entry, i) => (
-                <div key={i} className="relative pl-6">
-                  <div className="absolute left-0 top-1.5 w-2.5 h-2.5 rounded-full bg-accent z-10" />
-                  <p className="text-sm sm:text-base font-semibold text-foreground">{entry.school}</p>
-                  <p className="text-xs sm:text-sm text-secondary">{entry.field}</p>
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 mt-1 text-xs text-muted">
-                    <span className="flex items-center gap-1">
-                      <Calendar size={12} />
-                      {entry.start} — {entry.end}
-                    </span>
-                    {entry.location && (
-                      <span className="flex items-center gap-1">
-                        <MapPin size={12} />
-                        {entry.location}
+            <div className="space-y-1">
+              {education.map((entry) => {
+                const current = entry.end === 'Present';
+                return (
+                  <div
+                    key={entry.school}
+                    className="relative pl-6 sm:pl-7 py-2.5 rounded-lg transition-colors hover:bg-white/[0.03]"
+                  >
+                    {current ? (
+                      <span className="absolute left-0 top-[18px] flex h-2.5 w-2.5">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-60" />
+                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent" />
                       </span>
+                    ) : (
+                      <div className="absolute left-0 top-[18px] w-2.5 h-2.5 rounded-full bg-accent/40 ring-4 ring-accent/10 z-10" />
                     )}
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <p className="text-sm sm:text-base font-semibold text-foreground">{entry.school}</p>
+                      {current && (
+                        <span className="text-[10px] uppercase tracking-wider text-accent bg-accent/10 border border-accent/20 rounded-full px-2 py-0.5">
+                          Present
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex flex-wrap gap-1 mt-1.5">
+                      {tagsOf(entry.field).map((tag) => (
+                        <span
+                          key={tag}
+                          className="text-[11px] px-2 py-0.5 rounded-full bg-white/5 text-secondary border border-white/5"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 mt-1.5 text-xs text-muted">
+                      <span className="flex items-center gap-1">
+                        <Calendar size={12} />
+                        {entry.start} — {entry.end} · {duration(entry.start, entry.end)}
+                      </span>
+                      {entry.location && (
+                        <span className="flex items-center gap-1">
+                          <MapPin size={12} />
+                          {entry.location}
+                        </span>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
