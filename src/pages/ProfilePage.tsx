@@ -11,7 +11,7 @@ import SplitText from '@/components/SplitText';
 import BlurText from '@/components/BlurText';
 import CountUp from '@/components/CountUp';
 import { Badge } from '@/components/ui/badge';
-import { Globe, Clock, Calendar, Shield, Terminal, Server, Network, Database, Code2, Monitor, Smartphone, Gamepad2, Heart } from 'lucide-react';
+import { Globe, Clock, Calendar, Shield, Terminal, Server, Network, Database, Code2, Monitor, Smartphone, Gamepad2 } from 'lucide-react';
 
 interface DiscordUser {
   id: string;
@@ -324,12 +324,6 @@ function DiscordBlock({ profile }: { profile: DiscordProfile | null }) {
                 </span>
               </span>
             )}
-            <span className="group relative love-text">
-              <Heart size={20} className="text-red-500 fill-red-500/30 hover:fill-red-500 transition-colors cursor-default relative z-10" />
-              <span className="absolute -top-10 left-1/2 -translate-x-1/2 px-2.5 py-1.5 bg-[#1a1a1a] text-[10px] rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-red-500/20 z-20">
-                <span className="text-foreground">❤️ my GF</span>
-              </span>
-            </span>
           </div>
         </div>
       </div>
