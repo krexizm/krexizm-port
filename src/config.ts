@@ -1,4 +1,4 @@
-const DISCORD_ID = '699386102066446346' as const;
+const DISCORD_ID = '294284623746301954' as const;
 
 export const config = {
   // My Infos
@@ -28,7 +28,7 @@ export const config = {
     {
       name: 'Discord' as const,
       url: `https://discord.com/users/${DISCORD_ID}` as const,
-      handle: 'krexizm.' as const,
+      handle: 'krexizm.js' as const,
       description: 'Community and chat' as const,
     },
     {
