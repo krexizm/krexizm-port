@@ -40,7 +40,7 @@ function tagsOf(field: string) {
 export default function EducationPage() {
   return (
     <div className="page-content">
-      <div className="max-w-md mx-auto px-5 sm:px-4 py-6 sm:py-8">
+      <div className="max-w-md mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <div className="glass p-4 sm:p-6">
           <div className="flex items-center justify-center gap-3 mb-6">
             <GraduationCap size={22} className="text-accent" />

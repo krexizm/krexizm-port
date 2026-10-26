@@ -1,4 +1,4 @@
-import { Code2 } from 'lucide-react';
+import { Code2, Activity } from 'lucide-react';
 import { config } from '@/config';
 
 const GithubIcon = ({ size = 12, className = '' }: { size?: number; className?: string }) => (
@@ -29,24 +29,40 @@ export { GithubIcon, DiscordIcon, InstagramIcon, TelegramIcon };
 
 export default function Footer() {
   return (
-    <footer className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-between px-4 sm:px-6 py-2.5 sm:py-3 text-[10px] sm:text-xs font-mono text-muted" style={{ fontFamily: "'Geist Mono', monospace" }}>
-      <span className="flex items-center gap-1.5">
-        <Code2 size={12} className="text-secondary hidden sm:block" />
-        <span className="hidden sm:inline">Built with React + Tailwind</span>
-        <span className="sm:hidden">React</span>
-      </span>
-      <span suppressHydrationWarning>
-        &copy; {new Date().getFullYear()} {config.displayName}
-      </span>
-      <a
-        href="https://github.com/krexizm/krexizm-port"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center gap-1.5 text-secondary hover:text-foreground transition-colors"
-      >
-        <GithubIcon size={12} />
-        Source
-      </a>
+    <footer
+      className="fixed bottom-0 left-0 right-0 z-50 border-t border-white/[0.06] bg-[#0a0a0a]/85 backdrop-blur-sm font-mono text-[10px] sm:text-xs text-muted"
+      style={{ fontFamily: "'Geist Mono', monospace" }}
+    >
+      <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-4 sm:px-6 py-2.5">
+        <span className="hidden sm:flex items-center gap-1.5">
+          <Code2 size={12} className="text-secondary" />
+          Built with React + Tailwind
+        </span>
+        <span suppressHydrationWarning>
+          &copy; {new Date().getFullYear()} {config.displayName}
+        </span>
+        <div className="flex items-center gap-3 sm:gap-4">
+          {/* status host is a rendered page without a JSON API, so no uptime figure is shown */}
+          <a
+            href={config.statusUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 text-secondary hover:text-foreground transition-colors rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/50"
+          >
+            <Activity size={12} />
+            Status
+          </a>
+          <a
+            href="https://github.com/krexizm/krexizm-port"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 text-secondary hover:text-foreground transition-colors rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/50"
+          >
+            <GithubIcon size={12} />
+            Source
+          </a>
+        </div>
+      </div>
     </footer>
   );
 }

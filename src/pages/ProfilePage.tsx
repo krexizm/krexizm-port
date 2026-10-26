@@ -11,6 +11,7 @@ import SplitText from '@/components/SplitText';
 import BlurText from '@/components/BlurText';
 import CountUp from '@/components/CountUp';
 import { Badge } from '@/components/ui/badge';
+import { LinkifiedText } from '@/lib/linkify';
 import { Globe, Clock, Calendar, Shield, Terminal, Server, Network, Database, Code2, Monitor, Smartphone, Gamepad2 } from 'lucide-react';
 
 interface DiscordUser {
@@ -331,7 +332,9 @@ function DiscordBlock({ profile }: { profile: DiscordProfile | null }) {
       {bio && (
         <>
           <p className="text-xs font-semibold uppercase tracking-wider text-secondary mb-2">About me</p>
-          <p className="text-sm text-secondary mb-4 whitespace-pre-line">{bio}</p>
+          <p className="text-sm text-secondary mb-4 whitespace-pre-line">
+            <LinkifiedText text={bio} />
+          </p>
         </>
       )}
 
@@ -583,7 +586,7 @@ export default function ProfilePage() {
 
   return (
     <div className="page-content">
-      <div className="max-w-3xl mx-auto px-5 sm:px-4 space-y-5 sm:space-y-6">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 space-y-5 sm:space-y-6">
         <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

@@ -8,11 +8,12 @@ Personal portfolio site for [myself](https://krexizm.cc) — built with React, T
 - Live Vienna clock + live age counter
 - GitHub repos, contribution graph, language stats, and star counts
 - Discord widgets (current/played games)
-- Contact form via [Web3Forms](https://web3forms.com)
+- Contact by direct email link with a copy-to-clipboard button
 - Animated page transitions with Framer Motion
 - Dark glassmorphism design with responsive layout
 - Code-split pages via React.lazy
 - Auto-generated sitemap.xml
+- Discord component link embed (custom preview when the site is shared)
 
 ## Tech Stack
 
@@ -23,7 +24,6 @@ Personal portfolio site for [myself](https://krexizm.cc) — built with React, T
 - Lucide React (icons)
 - React Icons (tech logos)
 - React Country Flag
-- Web3Forms (contact form)
 
 ## Getting Started
 
@@ -47,7 +47,7 @@ src/
 ├── components/       # Topbar, Footer, ErrorBoundary, SplitText, BlurText, CountUp
 │   └── ui/           # shadcn Badge component
 ├── hooks/            # useLanyard (Discord WebSocket)
-├── lib/              # Utilities (flags, tech icons, Discord helpers, fetch hook)
+├── lib/              # Utilities (flags, tech icons, Discord helpers, linkify, fetch hook)
 ├── pages/            # Profile, Education, Work, Connect
 ├── config.ts         # Site configuration
 ├── App.tsx           # Root with lazy-loaded pages
@@ -65,9 +65,13 @@ Edit `src/config.ts` to update:
 - Social links (GitHub, Discord, Telegram, Instagram)
 - Skills and tech stack
 
-## Contact Form
+## Contact
 
-The contact form uses [Web3Forms](https://web3forms.com) — messages are sent directly to your registered email. The access key is in `src/config.ts`.
+The Connect page opens a `mailto:` link and can copy the address to the clipboard; no third-party form service is involved. The address lives in `src/config.ts` as `email`.
+
+## Discord link embed
+
+`index.html` contains a `<script id="discord:component-embed" type="application/json">` block that Discord reads when the site is shared, replacing the default preview with a container, buttons and the Open Graph image. It must stay in the server-rendered markup (max 3000 bytes) and the Open Graph tags remain as fallback. Validate changes with the [Embed Debugger](https://discord.com/developers/embeds).
 
 ## License
 

@@ -40,6 +40,21 @@ body {
   overflow-x: hidden;
 }
 
+:where(a, button, [role='button']):focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.45);
+  outline-offset: 2px;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+footer {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
 /* ── Glass Utility ───────────────────────────────────── */
 .glass {
   background: rgba(20, 20, 20, 0.6);
@@ -84,6 +99,23 @@ body {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   max-width: calc(100vw - 2rem);
+  transition: top 0.35s cubic-bezier(0.4, 0, 0.2, 1), padding 0.35s ease,
+    background-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Settles in once the page starts scrolling. */
+.topbar.is-scrolled {
+  top: 12px;
+  padding: 3px;
+  background: rgba(10, 10, 10, 0.9);
+  box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.9);
+  transform: translateX(-50%) scale(0.985);
+}
+
+@media (max-width: 639px) {
+  .topbar {
+    top: 12px;
+  }
 }
 
 @media (min-width: 640px) {
@@ -91,6 +123,11 @@ body {
     padding: 6px;
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
+  }
+
+  .topbar.is-scrolled {
+    top: 16px;
+    padding: 4px;
   }
 }
 
@@ -148,8 +185,27 @@ body {
   color: #ccc;
 }
 
+.topbar-tab:focus-visible {
+  color: #fff;
+  outline: 2px solid rgba(255, 255, 255, 0.45);
+  outline-offset: -3px;
+}
+
 .topbar-tab.active {
   color: #fff;
+}
+
+/* Four tabs have to fit a 320px viewport without clipping. */
+@media (max-width: 380px) {
+  .topbar {
+    gap: 0;
+  }
+
+  .topbar-tab {
+    padding: 9px 10px;
+    font-size: 11px;
+    letter-spacing: 0;
+  }
 }
 
 .topbar-indicator {

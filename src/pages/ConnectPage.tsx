@@ -1,7 +1,7 @@
-import { useState, type FormEvent } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { m } from 'framer-motion';
 import { config } from '@/config';
-import { ExternalLink, Send, Mail, CheckCircle, Loader2 } from 'lucide-react';
+import { ExternalLink, Mail, Copy, Check } from 'lucide-react';
 import { GithubIcon, DiscordIcon, InstagramIcon, TelegramIcon } from '@/components/Footer';
 
 const iconMap: Record<string, typeof GithubIcon> = {
@@ -17,43 +17,28 @@ const links = config.socials.map(s => ({
 }));
 
 export default function ConnectPage() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
-  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+  const [copyState, setCopyState] = useState<'idle' | 'copied' | 'failed'>('idle');
+  const copyTimer = useRef<number | undefined>(undefined);
 
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-    setStatus('sending');
+  useEffect(() => () => window.clearTimeout(copyTimer.current), []);
+
+  async function copyEmail() {
     try {
-      const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          access_key: config.web3formsAccessKey,
-          subject: `Portfolio contact from ${name}`,
-          from_name: name,
-          email,
-          message,
-        }),
-      });
-      const data = await res.json();
-      if (data.success) {
-        setStatus('sent');
-        setName('');
-        setEmail('');
-        setMessage('');
-      } else {
-        setStatus('error');
-      }
+      await navigator.clipboard.writeText(config.email);
+      setCopyState('copied');
+      window.clearTimeout(copyTimer.current);
+      copyTimer.current = window.setTimeout(() => setCopyState('idle'), 2000);
     } catch {
-      setStatus('error');
+      setCopyState('failed');
     }
   }
 
+  const copyLabel =
+    copyState === 'copied' ? 'Copied to clipboard.' : copyState === 'failed' ? 'Copy failed — select the address above.' : 'Replies usually within a day.';
+
   return (
     <div className="page-content">
-      <div className="max-w-3xl mx-auto px-5 sm:px-4 space-y-5 sm:space-y-6">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 space-y-5 sm:space-y-6">
         <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -116,98 +101,39 @@ export default function ConnectPage() {
           transition={{ delay: 0.4, duration: 0.5 }}
           className="glass p-6 sm:p-8"
         >
-          <div className="flex items-center justify-center gap-2 mb-4">
+          <div className="flex items-center justify-center gap-2 mb-2">
             <Mail size={20} className="text-secondary" />
             <h2 className="text-xl font-bold" style={{ fontFamily: "'Geist Mono', monospace" }}>
-              Send a Message
+              Email
             </h2>
           </div>
           <p className="text-sm text-secondary text-center mb-6">
-            Drop me a message and I'll get back to you.
+            No contact form — mail me directly and it lands in my inbox.
           </p>
 
-          {status === 'sent' ? (
-            <div className="flex flex-col items-center gap-3 py-8">
-              <CheckCircle size={40} className="text-[#23a55a]" />
-              <p className="text-foreground font-semibold">Message sent!</p>
-              <p className="text-sm text-secondary">Thanks for reaching out. I'll get back to you soon.</p>
-              <button
-                type="button"
-                onClick={() => setStatus('idle')}
-                className="text-xs text-muted hover:text-foreground transition-colors mt-2 cursor-pointer"
-              >
-                Send another
-              </button>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label htmlFor="name" className="block text-xs text-muted mb-1.5 uppercase tracking-wider">Name</label>
-                  <input
-                    id="name"
-                    type="text"
-                    required
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="w-full px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-sm text-foreground placeholder:text-muted focus:outline-none focus:border-white/20 transition-colors"
-                    style={{ fontFamily: "'Geist Mono', monospace" }}
-                    placeholder="Your name"
-                    maxLength={100}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-xs text-muted mb-1.5 uppercase tracking-wider">Email</label>
-                  <input
-                    id="email"
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-sm text-foreground placeholder:text-muted focus:outline-none focus:border-white/20 transition-colors"
-                    style={{ fontFamily: "'Geist Mono', monospace" }}
-                    placeholder="you@example.com"
-                    maxLength={254}
-                  />
-                </div>
-              </div>
-              <div>
-                <label htmlFor="message" className="block text-xs text-muted mb-1.5 uppercase tracking-wider">Message</label>
-                <textarea
-                  id="message"
-                  required
-                  rows={4}
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  className="w-full px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-sm text-foreground placeholder:text-muted focus:outline-none focus:border-white/20 transition-colors resize-none"
-                  style={{ fontFamily: "'Geist Mono', monospace" }}
-                  placeholder="What's on your mind?"
-                  maxLength={2000}
-                />
-              </div>
-              {status === 'error' && (
-                <p className="text-xs text-red-400">Something went wrong. Try again or contact me directly.</p>
-              )}
-              <button
-                type="submit"
-                disabled={status === 'sending'}
-                className="glass glass-hover w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 text-sm font-mono text-foreground cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                style={{ fontFamily: "'Geist Mono', monospace" }}
-              >
-                {status === 'sending' ? (
-                  <>
-                    <Loader2 size={14} className="animate-spin" />
-                    Sending...
-                  </>
-                ) : (
-                  <>
-                    <Send size={14} />
-                    Send Message
-                  </>
-                )}
-              </button>
-            </form>
-          )}
+          <div className="flex flex-col sm:flex-row gap-2.5">
+            <a
+              href={`mailto:${config.email}`}
+              className="glass glass-hover flex-1 min-w-0 inline-flex items-center justify-center gap-2 px-4 py-3 text-sm font-mono text-foreground no-underline"
+              style={{ fontFamily: "'Geist Mono', monospace" }}
+            >
+              <Mail size={14} className="shrink-0 text-secondary" />
+              <span className="truncate">{config.email}</span>
+            </a>
+            <button
+              type="button"
+              onClick={copyEmail}
+              className="glass glass-hover inline-flex items-center justify-center gap-2 px-4 py-3 text-sm font-mono text-secondary hover:text-foreground cursor-pointer shrink-0 sm:min-w-[8.5rem]"
+              style={{ fontFamily: "'Geist Mono', monospace" }}
+            >
+              {copyState === 'copied' ? <Check size={14} className="text-[#23a55a]" /> : <Copy size={14} />}
+              {copyState === 'copied' ? 'Copied' : 'Copy'}
+            </button>
+          </div>
+
+          <p className="text-xs text-muted text-center mt-4 min-h-[1rem]" aria-live="polite">
+            {copyLabel}
+          </p>
         </m.div>
       </div>
     </div>

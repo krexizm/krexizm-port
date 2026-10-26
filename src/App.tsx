@@ -21,7 +21,7 @@ const pages: Record<Page, React.LazyExoticComponent<React.ComponentType>> = {
 function PageLoader() {
   return (
     <div className="page-content">
-      <div className="max-w-3xl mx-auto px-4 space-y-6">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 space-y-6">
         <div className="skeleton h-8 w-48 mx-auto" />
         <div className="skeleton h-32 w-full" />
       </div>

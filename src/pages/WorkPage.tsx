@@ -198,7 +198,7 @@ export default function WorkPage() {
   if (loading) {
     return (
       <div className="page-content">
-        <div className="max-w-3xl mx-auto px-5 sm:px-4 space-y-5 sm:space-y-6">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 space-y-5 sm:space-y-6">
           <div className="skeleton h-8 w-48 mx-auto" />
           {[1, 2, 3].map(i => <div key={i} className="skeleton h-28 sm:h-32 w-full" />)}
         </div>
@@ -209,7 +209,7 @@ export default function WorkPage() {
   if (error) {
     return (
       <div className="page-content">
-        <div className="max-w-3xl mx-auto px-5 sm:px-4 space-y-5 sm:space-y-6">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 space-y-5 sm:space-y-6">
           <m.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -229,7 +229,7 @@ export default function WorkPage() {
 
   return (
     <div className="page-content">
-      <div className="max-w-3xl mx-auto px-5 sm:px-4 space-y-5 sm:space-y-6">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 space-y-5 sm:space-y-6">
         <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
