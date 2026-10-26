@@ -20,7 +20,7 @@ Personal portfolio site for [myself](https://krexizm.cc) — built with React, T
 - React 19 + TypeScript
 - Vite 8
 - Tailwind CSS 4
-- Framer Motion 12
+- Framer Motion 14
 - Lucide React (icons)
 - React Icons (tech logos)
 - React Country Flag
@@ -39,6 +39,13 @@ npm run build
 ```
 
 Output goes to `dist/`. Sitemap is auto-generated at `dist/sitemap.xml`.
+
+## Checks
+
+```bash
+npm run lint
+npm test
+```
 
 ## Project Structure
 
